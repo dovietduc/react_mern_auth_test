@@ -1,6 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 function Aside() {
+
+    const { user } = useSelector(state => state.auth);
+
     return (
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
             <a href="index3.html" className="brand-link">
@@ -10,7 +14,7 @@ function Aside() {
                 <div className="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div className="info">
                         <a href="#" className="d-block">
-                            Alexander Pierce
+                            {user.username}
                         </a>
                     </div>
                 </div>
