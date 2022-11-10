@@ -30,19 +30,22 @@ function Login() {
         const accessToken = response.data.accessToken;
         const user = jwt_decode(accessToken);
         
-        // save infomation to store
+        // 1. save infomation to store
         dispatch({
             type: 'LOGIN_SUCCESS',
             payload: user
         });
 
-        // redirect to admin page
+        // 2. redirect to admin page
         if(user.role != 'regular') {
             navigate('/admin');
         } else {
             // redirect to home page
             navigate('/home');
         }
+
+        // 3. save to localstorage
+        localStorage.setItem('accessToken', accessToken);
         
     }
 
