@@ -7,6 +7,7 @@ import store from './store/store';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import configCommonAxios from './services/configCommonAxios';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
