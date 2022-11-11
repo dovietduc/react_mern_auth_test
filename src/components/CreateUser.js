@@ -1,8 +1,39 @@
-import React from 'react';
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import AdminLayout from '../layout/AdminLayout';
 
 function CreateUser() {
+	
+	const navigate = useNavigate();
+	const [stateInput, setStateInput] = useState({
+		username: '',
+		email: '',
+		password: '',
+		role: ''
+	});
+
+	const handleChange = (event) => {
+		const newState = {
+			...stateInput,
+			[event.target.name]: event.target.value
+		};
+		setStateInput(newState);
+	}
+
+	const handleSubmitAddUser = async (event) => {
+		try {
+			event.preventDefault();
+			const response = await axios.post('auth/admin/user/create', stateInput);
+			if(response.status === 200) {
+				navigate('/admin');
+			}
+		} catch (error) {
+			
+		}
+	}
+
     return (
         <AdminLayout>
             <div className="content-wrapper">
@@ -23,7 +54,7 @@ function CreateUser() {
                                         </h3>
                                     </div>
 
-                                    <form>
+                                    <form onSubmit={handleSubmitAddUser}>
                                         <div className="card-body">
                                             <div className="form-group">
 												<label className="float-left">Username</label>
@@ -31,6 +62,9 @@ function CreateUser() {
                                                     type="text"
                                                     className="form-control"
                                                     placeholder="Enter Username"
+													value={stateInput.username}
+													onChange={handleChange}
+													name="username"
                                                 />
                                             </div>
                                             <div className="form-group">
@@ -39,6 +73,9 @@ function CreateUser() {
                                                     type="email"
                                                     className="form-control"
                                                     placeholder="Enter Email"
+													value={stateInput.email}
+													onChange={handleChange}
+													name="email"
                                                 />
                                             </div>
                                             <div className="form-group">
@@ -47,11 +84,17 @@ function CreateUser() {
                                                     type="password"
                                                     className="form-control"
                                                     placeholder="Password"
+													value={stateInput.password}
+													onChange={handleChange}
+													name="password"
                                                 />
                                             </div>
                                             <div className="form-group">
 												<label className="float-left">Role</label>
                                                 <select
+													onChange={handleChange}
+													name="role"
+													value={stateInput.role}
                                                     className="custom-select rounded-0"
                                                 >
 													<option value="">Choose Role</option>
