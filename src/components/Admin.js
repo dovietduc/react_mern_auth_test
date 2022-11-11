@@ -11,17 +11,7 @@ function Admin() {
     useEffect(() => {
         async function getUser() {
             try {
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            'accessToken'
-                        )}`,
-                    }
-                };
-                const response = await axios.get(
-                    'http://localhost:5000/auth/admin/user',
-                    config
-                );
+                const response = await axios.get('auth/admin/user');
 
                 // save to store
                 dispatch({
