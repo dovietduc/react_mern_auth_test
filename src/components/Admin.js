@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+
 import AdminLayout from '../layout/AdminLayout';
 
 function Admin() {
@@ -25,6 +26,22 @@ function Admin() {
         }
         getUser();
     }, []);
+
+    const handleDeleteUser = async (userId) => {
+        try {
+            const response = await axios.delete(`auth/admin/user/delete/${userId}`); 
+            if(response.status === 200) {
+                // dispatch remove user delete
+                dispatch({
+                    type: 'DELETE_USER',
+                    payload: userId
+                });
+            }
+        } catch (error) {
+            
+        }
+       
+    }
 
     return (
         <AdminLayout id="User">
@@ -79,7 +96,9 @@ function Admin() {
                                                             <td>
                                                                 {user.email}
                                                             </td>
-                                                            <td>Delete</td>
+                                                            <td>
+                                                                <button onClick={() => handleDeleteUser(user._id)} class="btn btn-danger">Delete</button>
+                                                            </td>
                                                         </tr>
                                                     );
                                                 })}
